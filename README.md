@@ -21,3 +21,9 @@ Los resultados de la simulación se pueden visualizar en tiempo real y exportar 
 
 Este proyecto constituye la práctica de la asignatura de Tecnología de la Programación II de la Universidad Complutense
 de Madrid del curso 2025/2026.
+
+## ¿Como compilar?
+`mvn clean compile`
+
+## ¿Como ejecutar (una vez compilado)?
+`Pendiente de documentar`
