@@ -501,7 +501,7 @@ Es necesario implementar el método `update`. Este método tiene que hacer lo si
 2. Actualizar el objeto según el estado del animal (ver la descripción abajo)
 3. Si la posición está fuera del mapa, la ajusta y cambia su estado a `NORMAL`.
 4. Si `energy` es `0.0` o `age` es mayor de `14.0`, cambia su estado a `DEAD`.
-5. Si su estado no es `DEAD`, pide comida al gestor de regiones usando `getfood(this, dt)` y la añade a su `energy` (
+5. Si su estado no es `DEAD`, pide comida al gestor de regiones usando `getFood(this, dt)` y la añade a su `energy` (
    manteniéndolo siempre entre `0.0` y `100.0`)
 
 *Para buscar un animal para cazar*, hay que pedir al gestor de regiones la lista de animales **herbívoros** en el campo
@@ -593,7 +593,7 @@ Usamos la siguiente interfaz para pedir comida para el animal `a` durante `dt` s
 
 ```java
 public interface FoodSupplier {
-	double getfood(AnimalInfo a, double dt);
+	double getFood(AnimalInfo a, double dt);
 }
 ```
 
@@ -647,7 +647,7 @@ Además de los métodos de la interfaz que implementa, hay que implementar los s
 La clase `DefaultRegion` representa una región que da comida sólo a animales herbívoros. No tiene constructoras (solo la
 constructora por defecto, que está definida automáticamente),
 
-Su método `getfood(a,dt)` devuelve `0.0` si el animal que pide comida es carnívoro, y lo siguiente si es herbívoro donde
+Su método `getFood(a,dt)` devuelve `0.0` si el animal que pide comida es carnívoro, y lo siguiente si es herbívoro donde
 `n` es el número de animales herbívoros en la región:
 
 ```java
@@ -662,7 +662,7 @@ La clase `DynamicSupplyRegion` representa una región que da comida sólo a anim
 comida puede decrecer/crecer. Su constructora recibe la cantidad inicial de la comida (número positivo de tipo `double`)
 y un factor de crecimiento (número no negativo de tipo `double`).
 
-Su método `getfood(a,dt)` devuelve `0.0` si el animal que pide comida es carnívoro, y lo siguiente si es herbívoro donde
+Su método `getFood(a,dt)` devuelve `0.0` si el animal que pide comida es carnívoro, y lo siguiente si es herbívoro donde
 `n` es el número de animales herbívoros en la región y `food` es la cantidad actual de comida:
 
 ```java
