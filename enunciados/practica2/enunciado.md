@@ -37,7 +37,7 @@ Está compuesta por una ventana principal que contiene cuatro componentes: (1) 
 
 Además, incluye un diálogo que permite cambiar las regiones, y una ventana (que se abre de forma separada) para dibujar el estado de la simulación (similar al visor que usaste en la primera práctica).
 
-Ver [demo.mp4](../../../ECOSYSTEM_TP2_2526/misc/pr2/demo.mp4)
+Ver [demo.mp4](demo.mp4)
 
 ## Cambios en el Modelo y el Controlador
 
@@ -677,15 +677,14 @@ Recuerda que si el usuario proporciona un archivo de entrada hay que usarlo para
 
 ### Ventana principal
 
-![Ventana principal](../../../ECOSYSTEM_TP2_2526/misc/pr2/MainWindow.png)
-
+![Ventana principal](MainWindow.png)
 ### Diálogo de cambio de regiones
 
-![Cambio de regiones](../../../ECOSYSTEM_TP2_2526/misc/pr2/ChangeRegionsDialog.png)
+![Cambio de regiones](ChangeRegionsDialog.png)
 
 ### Visor del mapa
 
-![Visor del mapa](../../../ECOSYSTEM_TP2_2526/misc/pr2/MapWindow.png)
+![Visor del mapa](MapWindow.png)
 
 ## Exportar el proyecto a un JAR
 
