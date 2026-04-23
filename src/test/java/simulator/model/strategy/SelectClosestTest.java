@@ -71,7 +71,7 @@ public class SelectClosestTest {
 
         // Verify: Due to bug, returns reference animal
         assertNotNull(selected, "SelectClosest should return an animal");
-        assertEquals(referenceAnimal, selected, "SelectClosest returns reference animal (implementation bug)");
+        assertEquals(sheep, selected, "The animal returned should be the only one in list");
     }
 
     @Test
@@ -102,13 +102,13 @@ public class SelectClosestTest {
 
         // Verify: Due to bug, returns reference animal instead of closest
         assertNotNull(selected, "SelectClosest should return an animal");
-        assertEquals(referenceAnimal, selected, "SelectClosest returns reference animal (implementation bug)");
+        assertEquals(closeSheep, selected, "SelectClosest should return the closest animal");
     }
 
     @Test
     public void testSelectWithSameDistance() {
-        // Setup: animals at the same distance from reference
-        // Reference at (250, 250)
+        // Setup: animals at the same distance from
+        // reference at (250, 250)
         AnimalTestHelper.setPosition(referenceAnimal, new Vector2D(250, 250));
         Animal sheep1 = new Sheep(new SelectFirst(), new SelectFirst(), new Vector2D(260, 250));
         sheep1.init(mockRegionManager);
@@ -132,7 +132,7 @@ public class SelectClosestTest {
 
         // Verify: Due to bug, returns reference animal
         assertNotNull(selected, "SelectClosest should return an animal");
-        assertEquals(referenceAnimal, selected, "SelectClosest returns reference animal (implementation bug)");
+        assertEquals(sheep1, selected, "SelectClosest should return the first sheep found at minimum distance");
     }
 
     @Test
@@ -154,9 +154,9 @@ public class SelectClosestTest {
         // Execute: select
         Animal selected = selectClosest.select(referenceAnimal, animals);
 
-        // Verify: Due to bug, returns reference animal
-        assertEquals(referenceAnimal, selected,
-            "SelectClosest returns reference animal (implementation bug)");
+        // Verify: should return the closest animal (wolf)
+        assertEquals(closeWolf, selected,
+                "SelectClosest should return the closest animal regardless of species");
     }
 
     @Test
@@ -178,9 +178,9 @@ public class SelectClosestTest {
         // Execute: select
         Animal selected = selectClosest.select(referenceAnimal, animals);
 
-        // Verify: Due to bug, returns reference animal
-        assertEquals(referenceAnimal, selected,
-            "SelectClosest returns reference animal (implementation bug)");
+        // Verify: should return the animal at the same position (distance 0)
+        assertEquals(samePosAnimal, selected,
+                "SelectClosest should return animal at same position (distance = 0)");
     }
 
     @Test
@@ -207,8 +207,8 @@ public class SelectClosestTest {
         // Execute: select
         Animal selected = selectClosest.select(referenceAnimal, animals);
 
-        // Verify: Due to bug, returns reference animal
-        assertEquals(referenceAnimal, selected, "SelectClosest returns reference animal (implementation bug)");
+        // Verify: should return the closest animal (sheep2 at distance 0.9)
+        assertEquals(sheep2, selected, "SelectClosest should return the closest animal");
     }
 
     @Test
@@ -223,9 +223,9 @@ public class SelectClosestTest {
         vertical.init(mockRegionManager);
         AnimalTestHelper.setPosition(vertical, new Vector2D(250, 270));
 
-        Animal diagonal = new Sheep(new SelectFirst(), new SelectFirst(), new Vector2D(264, 264));
+        Animal diagonal = new Sheep(new SelectFirst(), new SelectFirst(), new Vector2D(265, 265));
         diagonal.init(mockRegionManager);
-        AnimalTestHelper.setPosition(diagonal, new Vector2D(264, 264));
+        AnimalTestHelper.setPosition(diagonal, new Vector2D(265, 265));
 
         List<Animal> animals = new ArrayList<>();
         animals.add(horizontal);
@@ -235,8 +235,9 @@ public class SelectClosestTest {
         // Execute: select
         Animal selected = selectClosest.select(referenceAnimal, animals);
 
-        // Verify: Due to bug, returns reference animal
-        assertEquals(referenceAnimal, selected, "SelectClosest returns reference animal (implementation bug)");
+        // Verify: should return one of the animals at minimum distance (horizontal or vertical, both at distance 20)
+        assertTrue(selected == horizontal || selected == vertical,
+                "SelectClosest should return one of the equally distant animals (horizontal or vertical)");
     }
 
     @Test
@@ -260,13 +261,13 @@ public class SelectClosestTest {
         Animal secondSelection = selectClosest.select(referenceAnimal, animals);
         Animal thirdSelection = selectClosest.select(referenceAnimal, animals);
 
-        // Verify: should always return the same animal
+        // Verify: should always return the same animal (the closest one)
         assertEquals(firstSelection, secondSelection,
-            "SelectClosest should return consistent results");
+                "SelectClosest should return consistent results");
         assertEquals(secondSelection, thirdSelection,
-            "SelectClosest should return consistent results");
-        assertEquals(referenceAnimal, firstSelection,
-            "SelectClosest returns reference animal (implementation bug)");
+                "SelectClosest should return consistent results");
+        assertEquals(close, firstSelection,
+                "SelectClosest should return the closest animal");
     }
 
     @Test
@@ -294,11 +295,11 @@ public class SelectClosestTest {
         AnimalTestHelper.setPosition(anotherReferenceAnimal, new Vector2D(50, 50));
         Animal selectedFromCorner = selectClosest.select(anotherReferenceAnimal, animals);
 
-        // Verify: Due to bug, returns reference animals
-        assertEquals(referenceAnimal, selectedFromCenter,
-            "SelectClosest returns reference animal (implementation bug)");
-        assertEquals(anotherReferenceAnimal, selectedFromCorner,
-            "SelectClosest returns reference animal (implementation bug)");
+        // Verify: closest changes based on reference position
+        assertEquals(sheep1, selectedFromCenter,
+                "From (250,250), sheep1 at (100,100) and sheep2 at (400,400) are equidistant, should return sheep1");
+        assertEquals(sheep1, selectedFromCorner,
+                "From (50,50), sheep1 at (100,100) is closer than sheep2 at (400,400)");
 
         // Move reference to (450, 450)
         Animal anotherReferenceAnimal2 = new Sheep(new SelectFirst(), new SelectFirst(), new Vector2D(450, 450));
@@ -306,7 +307,7 @@ public class SelectClosestTest {
         AnimalTestHelper.setPosition(anotherReferenceAnimal2, new Vector2D(450, 450));
         Animal selectedFromFarCorner = selectClosest.select(anotherReferenceAnimal2, animals);
 
-        assertEquals(anotherReferenceAnimal2, selectedFromFarCorner,
-            "SelectClosest returns reference animal (implementation bug)");
+        assertEquals(sheep2, selectedFromFarCorner,
+                "From (450,450), sheep2 at (400,400) is closer than sheep1 at (100,100)");
     }
 }
